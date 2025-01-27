@@ -1,3 +1,26 @@
-p {
-    color:navy
+body {
+    margin: 0;
 }
+
+#background {
+    width: 1920px;
+    height: 900px;  
+    background-image: url(/styles/img/background\ image.jpg);
+    background-position:0 -200px;
+    background-size: 100% 150%;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+#mainPlayer {
+    position: absolute;
+    
+    
+}
+
+#angryCat {
+    position: absolute;
+    height: 100px;
+    width:100px;
+}
+
