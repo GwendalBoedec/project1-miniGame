@@ -11,7 +11,7 @@ constructor () {
     this.isJumping = false;
     this.velocityY = 0;
     this.velocityX = 0;
-    this.jumpStrength = 16;
+    this.jumpStrength = 20;
     this.gravity = -1;
     this.MainPlayerElm = document.getElementById("mainPlayer");
 
@@ -35,7 +35,7 @@ jumpAscent() {
     if (!this.isJumping) {
     this.isJumping = true;
     this.velocityY = this.jumpStrength;
-    this.velocityX += this.jumpStrength*0.6 ;
+    this.velocityX += this.jumpStrength*0.4 ;
 }
      this.updateUI(); 
 }
@@ -59,8 +59,8 @@ this.updateUI();
 
 class AngryCat {
 constructor() {
-    this.width = 100;
-    this.height = 100;
+    this.width = 90;
+    this.height = 90;
     //this.positionX formula aims to avoid cats being generated where the player is at the beginning, while also avoiding cat being generated outside the width of the background 
     this.positionX = Math.floor(Math.random()* (1920 - this.width*2))+this.width;
     this.positionY = 0;
@@ -126,7 +126,8 @@ if (
     firstPlayer.positionY + firstPlayer.height > cat.positionY 
 ) 
 {
-    window.location.href("")
+    console.log("gameover")
+    location.href = "gameover.html"
 }
    })
 }, 60

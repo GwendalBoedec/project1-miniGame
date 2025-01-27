@@ -13,14 +13,10 @@ body {
 }
 
 #mainPlayer {
-    position: absolute;
-    
-    
+    position: absolute; 
 }
 
 #angryCat {
     position: absolute;
-    height: 100px;
-    width:100px;
 }
 
