@@ -8,7 +8,7 @@ body {
     background-image: url(/styles/img/background\ image.jpg);
     background-position:0 -200px;
     background-size: 100% 150%;
-    background-repeat: no-repeat;
+    background-repeat: repeat-x;
     position: relative;
 }
 
