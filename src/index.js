@@ -8,8 +8,8 @@ class MainPlayer {
 constructor () {
     this.positionX = 30;
     this.positionY = -15;
-    this.width = 150;
-    this.height = 150;
+    this.width = 100;
+    this.height = 100;
     this.isJumping = false;
     this.velocityY = 0;
     this.velocityX = 0;
@@ -89,6 +89,7 @@ this.parentElm = document.getElementById("background");
 this.parentElm.appendChild(this.catElm);
 }
 
+
 remove() {
     this.catElm.remove();
 }
@@ -99,8 +100,46 @@ class NaughtyDog {
     constructor() {
         this.width = 90;
         this.height = 90; 
+        this.positionX = Math.floor(Math.random()* (1920 - this.width*2))+this.width;
+        this.positionY = 0;
+
+        this.createDogElement();
     }
+    createDogElement() {
+        // STEP 1 create element
+    this.badDogElm = document.createElement("img");
+    
+    //STEP2 : add content or modify
+    this.badDogElm.setAttribute("src", "./styles/img/dog.png");
+    this.badDogElm.setAttribute("alt", "bad dog");
+    this.badDogElm.id = "badDog";
+    this.badDogElm.style.width = this.width + "px";
+    this.badDogElm.style.height = this.height + "px";
+    this.badDogElm.style.left = this.positionX + "px";
+    this.badDogElm.style.bottom = this.positionY + "px";
+    
+    
+    //step3: append to the dom: `parentElm.appendChild()`
+    this.parentElm = document.getElementById("background");
+    this.parentElm.appendChild(this.badDogElm);
+    }
+
+    updateUI() {
+        this.badDogElm.style.left = this.positionX + "px";
+        this.badDogElm.style.bottom = this.positionY + "px";
+        this.badDogElm.style.width = this.width + "px";
+        this.badDogElm.style.height = this.height + "px";
+    }
+
+    moveLeft(speed) {
+        const dogInterval = setInterval(() => {
+            this.positionX -= speed;
+            this.updateUI();
+    }, 16);
+    }
+
 }
+
 
 class BarkBullet {
     constructor() {
@@ -161,7 +200,7 @@ const firstPlayer = new MainPlayer();
 
 document.addEventListener("keydown", (event) => {
 if (event.code === "ArrowRight") {
-firstPlayer.moveRight(5);
+firstPlayer.moveRight(15);
 }
 });
 
@@ -176,7 +215,8 @@ const bulletArr = [];
 document.addEventListener("keydown", (event) => {
     if (event.code === "Space") {
     const bullet = new BarkBullet();
-     console.log(bullet);
+    //console.log(bullet);
+    makeDogNoise()
     bulletArr.push(bullet);
     bulletArr.forEach((element) => {
         element.bulletMove(10);
@@ -191,6 +231,13 @@ function updateJump() {
         requestAnimationFrame(updateJump); 
     }
 
+    updateJump();
+
+function makeDogNoise() {
+        let dogNoise = document.getElementById("dogAudio");
+        dogNoise.play();
+        }
+
 //functionalities related to AngryCat instances
    const cat1 = new AngryCat();
    const cat2 = new AngryCat();
@@ -198,6 +245,11 @@ function updateJump() {
    let catCrew = [];
    catCrew.push(cat1, cat2, cat3);
    //console.log(catCrew);
+
+   function makeCatNoise() {
+    let catNoise = document.getElementById("catAudio");
+    catNoise.play();
+    }
 
    setInterval(() => {
    catCrew.forEach(function(cat) {
@@ -225,7 +277,7 @@ if (
     catCrew[i].positionY + catCrew[i].height > bulletArr[y].positionY 
  ) 
  {
-
+    makeCatNoise();
     catCrew[i].remove();
     bulletArr[y].remove();
     catCrew.splice(i, 1);
@@ -236,8 +288,35 @@ if (
     }}
  }, 60
     ) 
-    //functions invocation
-    updateJump();
+
+
+    //functions related to NaughtyDog class
+   const badDog1 = new NaughtyDog();
+   const badDog2 = new NaughtyDog();
+   const badDog3 = new NaughtyDog();
+   let badDogCrew = [];
+   badDogCrew.push(badDog1, badDog2, badDog3);
+
+   badDogCrew.forEach((badDog) => {
+    badDog.moveLeft(5);
+   })
+
+   setInterval(() => {
+    badDogCrew.forEach(function(dog) {
+ if (
+     firstPlayer.positionX < dog.positionX + dog.width &&
+     firstPlayer.positionX + firstPlayer.width > dog.positionX &&
+     firstPlayer.positionY < dog.positionY + dog.height &&
+     firstPlayer.positionY + firstPlayer.height > dog.positionY 
+ ) 
+ {
+     console.log("gameover")
+     location.href = "gameover.html"
+ }
+    })
+ }, 60
+    )
+   
 /*
 functionalities
 move right
