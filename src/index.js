@@ -2,7 +2,12 @@
 //PLAN
 // SET BACKGROUND
 // CREATE PLAYER
+function playMainTheme() {
+const mainTheme = document.getElementById("themeSong");
+mainTheme.play();
+}
 
+playMainTheme();
 
 class MainPlayer {
 constructor () {
@@ -28,6 +33,7 @@ updateUI() {
 }
 
 moveRight(speed) {
+    
     this.positionX += speed;
     this.updateUI();
 }
@@ -194,11 +200,35 @@ remove() {
 
 class Bones {
     constructor() {
-        this.width = 90;
-        this.height = 90; 
+        this.width = 30;
+        this.height = 30; 
         this.positionX = Math.floor(Math.random()* (1920 - this.width));
-        this.positionY = Math.floor(Math.random()*150);
+        this.positionY = Math.floor(Math.random()*300);
+
+        this.createBoneElm();
     }
+
+    createBoneElm () {
+        this.boneElm = document.createElement("img");
+    
+        //STEP2 : add content or modify
+        this.boneElm.setAttribute("src", "./styles/img/bone.png");
+        this.boneElm.setAttribute("alt", "bone");
+        this.boneElm.id = "bone";
+        this.boneElm.style.width = this.width + "px";
+        this.boneElm.style.height = this.height + "px";
+        this.boneElm.style.left = this.positionX + "px";
+        this.boneElm.style.bottom = this.positionY + "px";
+        
+        //step3: append to the dom: `parentElm.appendChild()`
+        this.parentElm = document.getElementById("background");
+        this.parentElm.appendChild(this.boneElm); 
+    }
+
+        remove() {
+            this.boneElm.remove();
+        }
+
 }
 
 //functionalities related to MainPlayer instances
@@ -245,6 +275,42 @@ function makeDogNoise() {
         dogNoise.play();
         }
 
+//functionalities related to bones instances
+const bone1 = new Bones();
+const bone2 = new Bones();
+const bone3 = new Bones();
+let boneArr = [];
+boneArr.push(bone1, bone3, bone2);
+
+function MakeBoneRewardNoise() {
+    let boneRewardNoise = document.getElementById("boneReward");
+    boneRewardNoise.play();
+    }
+
+let boneCounter = 0;
+
+setInterval(() => {
+    for (let i=0; i<boneArr.length;i++) 
+ if (
+     firstPlayer.positionX < boneArr[i].positionX + boneArr[i].width &&
+     firstPlayer.positionX + firstPlayer.width > boneArr[i].positionX &&
+     firstPlayer.positionY < boneArr[i].positionY + boneArr[i].height &&
+     firstPlayer.positionY + firstPlayer.height > boneArr[i].positionY 
+ ) 
+ {
+     console.log("+1 bone");
+     MakeBoneRewardNoise();
+     boneCounter++;
+     boneArr[i].remove();
+     boneArr.splice(i, 1);
+     i--;
+     console.log(boneCounter);
+ }
+ }, 60
+    )
+    
+
+
 //functionalities related to AngryCat instances
    const cat1 = new AngryCat();
    const cat2 = new AngryCat();
@@ -258,6 +324,7 @@ function makeDogNoise() {
     catNoise.play();
     }
 
+    // if collision with cat
    setInterval(() => {
    catCrew.forEach(function(cat) {
 if (
@@ -274,6 +341,7 @@ if (
 }, 60
    )
 
+    // if collision between cat and bark
    setInterval(() => {
     for (let i=0; i<catCrew.length;i++) {
         for (let y=0; y<bulletArr.length; y++) {
@@ -307,6 +375,8 @@ if (
    badDogCrew.forEach((badDog) => {
     badDog.moveLeft(0);
    })
+
+    // if collision with bad dog
 
    setInterval(() => {
     badDogCrew.forEach(function(dog) {
