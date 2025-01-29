@@ -268,7 +268,7 @@ if (
 ) 
 {
     console.log("gameover")
-    location.href = "./gameOverPage.html"
+    location.href = "gameOverPage.html"
 }
    })
 }, 60
@@ -305,7 +305,7 @@ if (
    badDogCrew.push(badDog1, badDog2, badDog3);
 
    badDogCrew.forEach((badDog) => {
-    badDog.moveLeft(3);
+    badDog.moveLeft(0);
    })
 
    setInterval(() => {
@@ -318,7 +318,7 @@ if (
  ) 
  {
      console.log("gameover")
-     location.href = "gameover.html"
+     location.href = "./gameOverPage.html"
  }
     })
  }, 60
