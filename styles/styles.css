@@ -3,13 +3,42 @@ body {
 }
 
 #background {
-    width: 1920px;
+    width: 1752px;
     height: 900px;  
-    background-image: url(./img/background\ image.jpg);
-    background-position:0 -200px;
-    background-size: 100% 150%;
+    background-image: url(./img/background\ test\ 2.jpg);
+    animation: scrollBackground 20s linear infinite;
     background-repeat: repeat-x;
     position: relative;
+    overflow: hidden;
+}
+
+@keyframes scrollBackground {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: -1752px 0;
+    }
+}
+
+#infoContainer {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 300px;
+    height: 150px;
+    background-color: pink;
+    border: 5px, solid, purple;
+}
+
+#bonesCounter img {
+width: 20px;
+height: 20px;
+}
+
+#timer img {
+    width: 25px;
+    height: 25px; 
 }
 
 #mainPlayer {

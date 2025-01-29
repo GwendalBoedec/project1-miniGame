@@ -9,17 +9,26 @@ mainTheme.play();
 
 playMainTheme();
 
+// SET BACKGROUND BEHAVIOUR
+const backgroundElm = document.getElementById("background");
+
+
+
+
+// implement classes
 class MainPlayer {
 constructor () {
-    this.positionX = 30;
+    this.positionX = 200;
     this.positionY = -15;
     this.width = 100;
     this.height = 100;
     this.isJumping = false;
     this.velocityY = 0;
     this.velocityX = 0;
-    this.jumpStrength = 20;
+    this.jumpStrength = 25;
     this.gravity = -1;
+    this.movingRight = false;
+    this.speed = 5;
     this.MainPlayerElm = document.getElementById("mainPlayer");
 
     this.updateUI();
@@ -32,17 +41,22 @@ updateUI() {
     this.MainPlayerElm.style.height = this.height + "px";
 }
 
-moveRight(speed) {
-    
-    this.positionX += speed;
-    this.updateUI();
+moveRight() {
+    const step = () => {
+        if (this.movingRight) {
+            this.positionX += this.speed;
+            this.updateUI();
+            requestAnimationFrame(step);
+        }
+    };
+    requestAnimationFrame(step);
 }
 
 jumpAscent() {
     if (!this.isJumping) {
     this.isJumping = true;
     this.velocityY = this.jumpStrength;
-    this.velocityX += this.jumpStrength*0.4 ;
+    //this.velocityX += this.jumpStrength*0.4 ;
 }
      this.updateUI(); 
 }
@@ -51,14 +65,14 @@ jumpDescent() {
     if (this.isJumping) {
         this.velocityY += this.gravity;
         this.positionY += this.velocityY
-        this.positionX += this.velocityX
+        //this.positionX += this.velocityX
     };
       
     if (this.positionY <= 0) {
         this.positionY = 0; 
         this.isJumping = false; 
         this.velocityY = 0; 
-        this.velocityX = 0;
+        //this.velocityX = 0;
 }
 this.updateUI();
 }
@@ -95,6 +109,20 @@ this.parentElm = document.getElementById("background");
 this.parentElm.appendChild(this.catElm);
 }
 
+updateUI() {
+    this.catElm.style.left = this.positionX + "px";
+    this.catElm.style.bottom = this.positionY + "px";
+    this.catElm.style.width = this.width + "px";
+    this.catElm.style.height = this.height + "px";
+}
+
+moveLeft(speed) {
+    const catInterval = setInterval(() => {
+        this.positionX -= speed;
+        this.updateUI();
+}, 16);
+}
+
 
 remove() {
     this.catElm.remove();
@@ -104,7 +132,7 @@ remove() {
 
 class NaughtyDog {
     constructor() {
-        this.width = 200;
+        this.width = 100;
         this.height = 100; 
         this.positionX = 500 + Math.floor(Math.random()* (1920 - this.width - 500));
         this.positionY = 0;
@@ -116,7 +144,7 @@ class NaughtyDog {
     this.badDogElm = document.createElement("img");
     
     //STEP2 : add content or modify
-    this.badDogElm.setAttribute("src", "./styles/img/big dog.gif");
+    this.badDogElm.setAttribute("src", "./styles/img/crazy banana (1).gif");
     this.badDogElm.setAttribute("alt", "bad dog");
     this.badDogElm.id = "badDog";
     this.badDogElm.style.width = this.width + "px";
@@ -225,6 +253,20 @@ class Bones {
         this.parentElm.appendChild(this.boneElm); 
     }
 
+    updateUI() {
+        this.boneElm.style.left = this.positionX + "px";
+        this.boneElm.style.bottom = this.positionY + "px";
+        this.boneElm.style.width = this.width + "px";
+        this.boneElm.style.height = this.height + "px";
+    }
+
+    moveLeft(speed) {
+        const boneInterval = setInterval(() => {
+            this.positionX -= speed;
+            this.updateUI();
+    }, 16);
+    }
+
         remove() {
             this.boneElm.remove();
         }
@@ -235,11 +277,18 @@ class Bones {
 const firstPlayer = new MainPlayer();
 //console.log(firstPlayer);
 
-document.addEventListener("keydown", (event) => {
-if (event.code === "ArrowRight") {
-firstPlayer.moveRight(15);
+/* document.addEventListener("keydown", (event) => {
+if (event.code === "ArrowRight" && !firstPlayer.movingRight) {
+    firstPlayer.movingRight = true;
+    firstPlayer.moveRight();
 }
 });
+
+document.addEventListener("keyup", (event) => {
+    if (event.code === "ArrowRight") {
+        firstPlayer.movingRight = false;
+    }
+}); */
 
 document.addEventListener("keydown", (event) => {
     if (event.code === "ArrowUp") {
@@ -282,13 +331,17 @@ const bone3 = new Bones();
 let boneArr = [];
 boneArr.push(bone1, bone3, bone2);
 
+boneArr.forEach((bone) => {
+    bone.moveLeft(1.5);
+   })
+
 function MakeBoneRewardNoise() {
     let boneRewardNoise = document.getElementById("boneReward");
     boneRewardNoise.play();
     }
 
 let boneCounter = 0;
-
+const BoneNumRecord = document.getElementById("BoneNumber");
 setInterval(() => {
     for (let i=0; i<boneArr.length;i++) 
  if (
@@ -301,6 +354,7 @@ setInterval(() => {
      console.log("+1 bone");
      MakeBoneRewardNoise();
      boneCounter++;
+     BoneNumRecord.innerText = boneCounter;
      boneArr[i].remove();
      boneArr.splice(i, 1);
      i--;
@@ -308,7 +362,6 @@ setInterval(() => {
  }
  }, 60
     )
-    
 
 
 //functionalities related to AngryCat instances
@@ -318,6 +371,10 @@ setInterval(() => {
    let catCrew = [];
    catCrew.push(cat1, cat2, cat3);
    //console.log(catCrew);
+
+   catCrew.forEach((cat) => {
+    cat.moveLeft(1.5);
+   })
 
    function makeCatNoise() {
     let catNoise = document.getElementById("catAudio");
@@ -373,7 +430,7 @@ if (
    badDogCrew.push(badDog1, badDog2, badDog3);
 
    badDogCrew.forEach((badDog) => {
-    badDog.moveLeft(0);
+    badDog.moveLeft(6);
    })
 
     // if collision with bad dog
@@ -394,6 +451,32 @@ if (
  }, 60
     )
    
+// SET TIME
+let timer;
+const remainingTimeContainer = document.getElementById("RemainingTimeBox");
+let RemainingTime = 120;
+const minutes = Math.floor(RemainingTime / 60)
+    .toString()
+    .padStart(2, "0");
+const seconds = (RemainingTime % 60).toString().padStart(2, "0");
+remainingTimeContainer.innerText = `${minutes}:${seconds}`;
+
+timer = setInterval (() => {
+    RemainingTime--;
+    const minutes = Math.floor(RemainingTime / 60)
+    .toString()
+    .padStart(2, "0");
+const seconds = (RemainingTime % 60).toString().padStart(2, "0");
+remainingTimeContainer.innerText = `${minutes}:${seconds}`;
+    
+    if (RemainingTime === 0) {
+        clearInterval(timer);
+        location.href = "./resultPage.html"
+    }
+}, 1000)
+
+
+
 /*
 functionalities
 move right
