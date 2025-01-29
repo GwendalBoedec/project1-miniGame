@@ -65,7 +65,7 @@ constructor() {
     this.width = 90;
     this.height = 90;
     //this.positionX formula aims to avoid cats being generated where the player is at the beginning, while also avoiding cat being generated outside the width of the background 
-    this.positionX = Math.floor(Math.random()* (1920 - this.width*2))+this.width;
+    this.positionX = 300 + Math.floor(Math.random()* (1920 - this.width-300));
     this.positionY = 0;
 
     this.createCatElement()
@@ -98,9 +98,9 @@ remove() {
 
 class NaughtyDog {
     constructor() {
-        this.width = 90;
-        this.height = 90; 
-        this.positionX = Math.floor(Math.random()* (1920 - this.width*2))+this.width;
+        this.width = 200;
+        this.height = 100; 
+        this.positionX = 500 + Math.floor(Math.random()* (1920 - this.width - 500));
         this.positionY = 0;
 
         this.createDogElement();
@@ -110,7 +110,7 @@ class NaughtyDog {
     this.badDogElm = document.createElement("img");
     
     //STEP2 : add content or modify
-    this.badDogElm.setAttribute("src", "./styles/img/dog.png");
+    this.badDogElm.setAttribute("src", "./styles/img/big dog.gif");
     this.badDogElm.setAttribute("alt", "bad dog");
     this.badDogElm.id = "badDog";
     this.badDogElm.style.width = this.width + "px";
@@ -192,7 +192,14 @@ remove() {
 }
 }
 
-
+class Bones {
+    constructor() {
+        this.width = 90;
+        this.height = 90; 
+        this.positionX = Math.floor(Math.random()* (1920 - this.width));
+        this.positionY = Math.floor(Math.random()*150);
+    }
+}
 
 //functionalities related to MainPlayer instances
 const firstPlayer = new MainPlayer();
@@ -261,7 +268,7 @@ if (
 ) 
 {
     console.log("gameover")
-    location.href = "gameover.html"
+    location.href = "./gameOver.html"
 }
    })
 }, 60
