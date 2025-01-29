@@ -268,7 +268,7 @@ if (
 ) 
 {
     console.log("gameover")
-    location.href = "./gameOver.html"
+    location.href = "./gameOverPage.html"
 }
    })
 }, 60
