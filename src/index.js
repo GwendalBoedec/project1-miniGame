@@ -298,7 +298,7 @@ if (
    badDogCrew.push(badDog1, badDog2, badDog3);
 
    badDogCrew.forEach((badDog) => {
-    badDog.moveLeft(5);
+    badDog.moveLeft(3);
    })
 
    setInterval(() => {
