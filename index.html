@@ -3,35 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Doggo Adventures</title>
+    <link rel="icon" type="image/png" href="./styles/img/bone.png">
     <link rel="stylesheet" href="./styles/styles.css">
     <audio id="catAudio" src="./styles/audio/cat noise2.mp3" preload="auto"></audio>
     <audio id="dogAudio" src="./styles/audio/dog noise.mp3" preload="auto"></audio>
     <audio id="boneReward" src="./styles/audio/bone reward.mp3" preload="auto"></audio>
     <audio id="themeSong" src="./styles/audio/game-music-song.mp3" preload="auto"></audio>
+    <audio id="gameover noise" src="./styles/audio/gameover noise.mp3" preload="auto"></audio>
 </head>
 <body>
-    <div id="background">
+    <div id="background" style="display: block">
        <img id="mainPlayer" src="./styles/img/dog 3.gif" alt="dog">
     </img>
     
     </div>
 
     <div id="infoContainer">
-        <section id="timer">TIMER
+        <section id="timer">
             <img src="./styles/img/clock.png" alt="clock">
-            <p id="RemainingTimeBox"> 00:00 </p>
-
+            <span id="RemainingTimeBox"> 00:00 </span>
         </section>
 
-        <section id="bonesCounter">BONES COLLECTED
+        <section id="bonesCounter">
             <img src="./styles/img/bone.png" alt="bone">
-            <p id="BoneNumber"></p>
+            <span id="BoneNumber"> </span>
+            
         </section>
 
-
-
+        <section id="commands"> 
+            <img src="./styles/img/keyboard.png" alt="commands">
+            <p> press Arrow Up to jump</p>
+            <p> press Space to bark</p>
+        </section>
     </div>
+
+    <div id="gameOverView" style="display: none">
+        <h2 id="gameOverTitle"> </h2>
+        <p> Do you to play again? Bones are waiting for you...</p>
+        <button>let's play again</button>
+        </div>
 
  
     

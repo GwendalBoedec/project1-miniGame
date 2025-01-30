@@ -1,12 +1,14 @@
 body {
     margin: 0;
+    font-family: cursive;
 }
+
 
 #background {
     width: 1752px;
-    height: 900px;  
+    height: 920px;  
     background-image: url(./img/background\ test\ 2.jpg);
-    animation: scrollBackground 20s linear infinite;
+    animation: scrollBackground 10s linear infinite;
     background-repeat: repeat-x;
     position: relative;
     overflow: hidden;
@@ -23,22 +25,73 @@ body {
 
 #infoContainer {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 300px;
-    height: 150px;
-    background-color: pink;
-    border: 5px, solid, purple;
+    display: flex;
+    flex-direction: column;
+    top: 0px;
+    right: 0px;
+    width: 160px;
+    height: 910px;
+    background-color: palevioletred;
+    border: 5px solid rgb(199, 103, 135);
 }
 
-#bonesCounter img {
-width: 20px;
-height: 20px;
+#infoContainer section {
+    margin: 50px 10px;
+    font-family: cursive;
+    font-size: 1.5em;
+}
+
+#timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement  */
+    gap: 10px; 
 }
 
 #timer img {
-    width: 25px;
-    height: 25px; 
+    margin: 10px;
+    width: 50px;
+    height: 50px;   
+}
+
+#bonesCounter {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement */
+    justify-content: center; /* Centre horizontalement  */
+    gap: 10px; 
+}
+
+#bonesCounter img {
+margin: 10px;
+width: 40px;
+height: 40px;
+}
+
+#commands {
+display: flex;
+flex-direction: column;
+align-items: center; /* Centre verticalement */
+justify-content: center; /* Centre horizontalement  */
+gap: 10px; 
+}
+
+#commands img {
+    margin: 10px;
+    width: 50px;
+    height: 50px; 
+}
+
+#commands p {
+    font-size: 0.8em;
+}
+
+#gameOverView {
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    border: 10 solid black
 }
 
 #mainPlayer {
