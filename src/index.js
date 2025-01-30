@@ -1,10 +1,16 @@
-//console.log("heyyyyyyyy that's a start");
-//PLAN
-// SET BACKGROUND
-// CREATE PLAYER
+
+let gameOver = false;
+
+//SET UP MUSIC
+const mainTheme = document.getElementById("themeSong");
+
 function playMainTheme() {
-    const mainTheme = document.getElementById("themeSong");
     mainTheme.play();
+}
+
+function stopMainTheme() {
+    mainTheme.pause();
+    mainTheme.currentTime = 0;
 }
 
 playMainTheme();
@@ -12,8 +18,9 @@ playMainTheme();
 // SET BACKGROUND BEHAVIOUR
 const backgroundElm = document.getElementById("background");
 
-
-
+function stopBackgroundScrolling() {
+    backgroundElm.style.animation = "none";
+}
 
 // implement classes
 class MainPlayer {
@@ -135,7 +142,7 @@ class CrazyBanana {
         this.height = 100;
         this.positionX = 1920;
         this.positionY = 0;
-        this.speed = Math.random() * (10 - 8) + 8;
+        this.speed = Math.random() * (10 - 7) + 7;
 
         this.createBananaElement();
     }
@@ -287,7 +294,6 @@ document.addEventListener("keydown", (event) => {
 });
 
 
-
 document.addEventListener("keydown", (event) => {
     if (event.code === "Space") {
         const bullet = new BarkBullet();
@@ -296,8 +302,6 @@ document.addEventListener("keydown", (event) => {
         bulletArr.push(bullet);
     }
 });
-
-
 
 function updateJump() {
     firstPlayer.jumpDescent();
@@ -318,7 +322,7 @@ function makeGameOverDogNoise() {
 
 //functionalities related to bones instances
 
-setInterval(() => {
+const generateBoneTimer = setInterval(() => {
     const newBone = new Bones();
     movingItems.boneCollection.push(newBone);
 }, 2000);
@@ -350,9 +354,6 @@ setInterval(() => {
 }, 60
 )
 
-
-
-
 const movingItems = {
     catCrew: [],
     bananaCrew: [],
@@ -361,25 +362,28 @@ const movingItems = {
 
 
 function gameLoop() {
-    Object.values(movingItems).forEach((objectArr) => {
-        objectArr.forEach((elm) => {
-            elm.moveLeft();
+    if (!gameOver) {
+        Object.values(movingItems).forEach((objectArr) => {
+            objectArr.forEach((elm) => {
+                elm.moveLeft();
+            });
         });
-    });
 
-    bulletArr.forEach((bullet, index) => {
-        bullet.bulletMove();
-    });
+        bulletArr.forEach((bullet, index) => {
+            bullet.bulletMove();
+        });
 
-    requestAnimationFrame(gameLoop);
-};
+        requestAnimationFrame(gameLoop);
+    };
+}
 
 //functionalities related to AngryCat instances
 
+let generateCatTimer;
 function generateCat() {
     const newCat = new AngryCat();
     movingItems.catCrew.push(newCat);
-setTimeout(generateCat, Math.random() * (3000 - 1500) + 1500);
+    generateCatTimer = setTimeout(generateCat, Math.random() * (3000 - 1500) + 1500);
 }
 
 generateCat();
@@ -402,6 +406,12 @@ setInterval(() => {
             firstPlayer.positionY + firstPlayer.height > cat.positionY
         ) {
             makeGameOverDogNoise();
+            stopBackgroundScrolling();
+            stopMainTheme();
+            gameOver = true;
+            clearTimeout(generateBananaTimer);
+            clearTimeout(generateCatTimer);
+            clearInterval(generateBoneTimer);
             console.log("collision")
             gameOverView.style.display = "block";
             gameOverTitle.innerText = "Oh no, an angry cat got you!";
@@ -438,10 +448,12 @@ setInterval(() => {
 
 //functions related to CrazyBanana class
 
+let generateBananaTimer;
 function generateBanana() {
+    if (gameOver) return;
     const newBanana = new CrazyBanana();
     movingItems.bananaCrew.push(newBanana);
-setTimeout(generateBanana, Math.random() * (4000 - 2000) + 1000);
+    generateBananaTimer = setTimeout(generateBanana, Math.random() * (4000 - 2000) + 1000);
 }
 
 generateBanana();
@@ -457,12 +469,20 @@ setInterval(() => {
             firstPlayer.positionY < dog.positionY + dog.height &&
             firstPlayer.positionY + firstPlayer.height > dog.positionY
         ) {
-            makeGameOverDogNoise()
-            location.href = "./gameOverPage.html"
+            makeGameOverDogNoise();
+            stopMainTheme();
+            gameOver = true;
+            clearTimeout(generateBananaTimer);
+            clearTimeout(generateCatTimer);
+            clearInterval(generateBoneTimer);
+            gameOverView.style.display = "block";
+            gameOverTitle.innerText = "Oh no, you've been hit by a crazy banana!";
+            stopBackgroundScrolling()
         }
     })
 }, 60
 )
+
 
 gameLoop();
 
@@ -486,15 +506,24 @@ timer = setInterval(() => {
 
     if (RemainingTime === 0) {
         clearInterval(timer);
-        location.href = "./resultPage.html"
+        clearTimeout(generateBananaTimer);
+        clearTimeout(generateCatTimer);
+        clearInterval(generateBoneTimer);
+        resultView.style.display = "block";
+        result.innerText = `You've collected an impressive amount of ${boneCounter} bones!`;
+        stopBackgroundScrolling()
     }
 }, 1000)
 
 
+// REDIRECTIONS
+const restartButton = document.getElementById("gameOverButton");
+restartButton.addEventListener("click", () => {
+    location.href = "./index.html"
+})
 
-/*
-
-// CREATE SCREEN GAME OVER
-*/
-
+const resultButton = document.getElementById("resultButton");
+resultButton.addEventListener("click", () => {
+    location.href = "./index.html"
+})
 

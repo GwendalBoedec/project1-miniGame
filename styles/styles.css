@@ -6,7 +6,7 @@ body {
 
 #background {
     width: 1752px;
-    height: 920px;  
+    height: 920px;
     background-image: url(./img/background\ test\ 2.jpg);
     animation: scrollBackground 10s linear infinite;
     background-repeat: repeat-x;
@@ -18,6 +18,7 @@ body {
     0% {
         background-position: 0 0;
     }
+
     100% {
         background-position: -1752px 0;
     }
@@ -44,58 +45,92 @@ body {
 #timer {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centre verticalement */
-    justify-content: center; /* Centre horizontalement  */
-    gap: 10px; 
+    align-items: center;
+    /* Centre verticalement */
+    justify-content: center;
+    /* Centre horizontalement  */
+    gap: 10px;
 }
 
 #timer img {
     margin: 10px;
     width: 50px;
-    height: 50px;   
+    height: 50px;
 }
 
 #bonesCounter {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centre verticalement */
-    justify-content: center; /* Centre horizontalement  */
-    gap: 10px; 
+    align-items: center;
+    /* Centre verticalement */
+    justify-content: center;
+    /* Centre horizontalement  */
+    gap: 10px;
 }
 
 #bonesCounter img {
-margin: 10px;
-width: 40px;
-height: 40px;
+    margin: 10px;
+    width: 40px;
+    height: 40px;
 }
 
 #commands {
-display: flex;
-flex-direction: column;
-align-items: center; /* Centre verticalement */
-justify-content: center; /* Centre horizontalement  */
-gap: 10px; 
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    /* Centre verticalement */
+    justify-content: center;
+    /* Centre horizontalement  */
+    gap: 10px;
 }
 
 #commands img {
     margin: 10px;
     width: 50px;
-    height: 50px; 
+    height: 50px;
 }
 
 #commands p {
     font-size: 0.8em;
+
 }
 
 #gameOverView {
+    position: fixed;
+    top: 50%;
+    left: 50%;
     width: 300px;
-    height: 300px;
-    background-color: white;
-    border: 10 solid black
+    height: 250px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+#resultView {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 250px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 1000;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
 }
 
 #mainPlayer {
-    position: absolute; 
+    position: absolute;
 }
 
 #angryCat {
