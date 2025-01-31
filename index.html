@@ -13,7 +13,16 @@
     <audio id="gameover noise" src="./styles/audio/gameover noise.mp3" preload="auto"></audio>
 </head>
 <body>
-    <div id="background" style="display: block">
+<div id="startWindow">
+    <h2>Welcome to Doggo Adventures!</h2>
+    <p>click on the bone to launch the game</p>
+    <button id="startGameButton">
+        <img src="./styles/img/bone.png" alt="bone">
+    </button>
+</div>
+
+<div id="gameContainer"> 
+    <div id="background">
        <img id="mainPlayer" src="./styles/img/dog 3.gif" alt="dog">
     </img>
     
@@ -33,25 +42,26 @@
 
         <section id="commands"> 
             <img src="./styles/img/keyboard.png" alt="commands">
-            <p> press Arrow Up to jump</p>
-            <p> press Space to bark</p>
+            <p> press Arrow Up to jump and avoid abstacles</p>
+            <p> press Space to bark and get rid of cats!</p>
         </section>
     </div>
 
     <div id="gameOverView" style="display: none">
         <h2 id="gameOverTitle"> </h2>
-        <p> Do you to play again? </p>
+        <p> Do you want to play again? </p>
         <p> Bones are waiting for you...</p>
-        <button id="gameOverButton">let's play again</button>
+        <button id="gameOverButton">return to start menu</button>
         </div>
 
     <div id="resultView" style="display: none">
         <h2> Good doggo! </h2>
         <p id="result"></p>
-        <p> Do you to play again? </p>
+        <p> Do you want to play again? </p>
         <button id="resultButton">let's play again</button>
         </div>
  
+</div>
     
 </body>
 <script src="./src/index.js"></script>

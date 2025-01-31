@@ -1,19 +1,44 @@
 
 let gameOver = false;
+let gameStarted = false;
+
+
+function startGame() {
+    document.getElementById("background").style.display = "block";
+    document.getElementById('startWindow').style.display = "none";
+    document.getElementById("infoContainer").style.display = "flex";
+    gameStarted = true;
+
+    gameLoop(); // start game loop
+    generateBone(); // start generating bones
+    generateCat(); // start generating cats
+    generateBanana(); // start generating bananas
+    playMainTheme();
+    mainTheme.addEventListener("ended", function() {
+    playMainTheme(); 
+    });
+    timer();
+}
+
+const startGameButton = document.getElementById("startGameButton");
+startGameButton.addEventListener("click", () => {
+    startGame();
+    console.log(gameStarted)
+});
 
 //SET UP MUSIC
 const mainTheme = document.getElementById("themeSong");
 
 function playMainTheme() {
+   
     mainTheme.play();
 }
 
 function stopMainTheme() {
     mainTheme.pause();
-    mainTheme.currentTime = 0;
 }
 
-playMainTheme();
+
 
 // SET BACKGROUND BEHAVIOUR
 const backgroundElm = document.getElementById("background");
@@ -142,7 +167,7 @@ class CrazyBanana {
         this.height = 100;
         this.positionX = 1920;
         this.positionY = 0;
-        this.speed = Math.random() * (10 - 7) + 7;
+        this.speed = Math.random() * (10 - 8) + 8;
 
         this.createBananaElement();
     }
@@ -322,11 +347,13 @@ function makeGameOverDogNoise() {
 
 //functionalities related to bones instances
 
-const generateBoneTimer = setInterval(() => {
+let generateBoneTimer;
+function generateBone() {
+    if (gameOver) return;
     const newBone = new Bones();
     movingItems.boneCollection.push(newBone);
-}, 2000);
-
+    generateBoneTimer = setTimeout(generateBone, 2000);
+}
 
 function MakeBoneRewardNoise() {
     let boneRewardNoise = document.getElementById("boneReward");
@@ -336,6 +363,11 @@ function MakeBoneRewardNoise() {
 let boneCounter = 0;
 const BoneNumRecord = document.getElementById("BoneNumber");
 setInterval(() => {
+
+    if(!movingItems.boneCollection.length) {
+        return;
+    }
+
     for (let i = 0; i < movingItems.boneCollection.length; i++)
         if (
             firstPlayer.positionX < movingItems.boneCollection[i].positionX + movingItems.boneCollection[i].width &&
@@ -351,18 +383,18 @@ setInterval(() => {
             i--;
             console.log(boneCounter);
         }
-}, 60
-)
+}, 60);
 
 const movingItems = {
     catCrew: [],
     bananaCrew: [],
     boneCollection: [],
 };
+console.log(gameStarted);
 
+function gameLoop() {    
 
-function gameLoop() {
-    if (!gameOver) {
+    if (gameStarted && !gameOver && RemainingTime > 0) {
         Object.values(movingItems).forEach((objectArr) => {
             objectArr.forEach((elm) => {
                 elm.moveLeft();
@@ -374,19 +406,19 @@ function gameLoop() {
         });
 
         requestAnimationFrame(gameLoop);
-    };
+    }
 }
 
 //functionalities related to AngryCat instances
 
 let generateCatTimer;
 function generateCat() {
+    if (gameOver) return;
     const newCat = new AngryCat();
     movingItems.catCrew.push(newCat);
     generateCatTimer = setTimeout(generateCat, Math.random() * (3000 - 1500) + 1500);
 }
 
-generateCat();
 
 function makeCatNoise() {
     let catNoise = document.getElementById("catAudio");
@@ -398,6 +430,11 @@ const gameOverTitle = document.getElementById("gameOverTitle");
 
 // if collision with cat
 setInterval(() => {
+
+    if(!movingItems.catCrew.length) {
+        return;
+    }
+
     movingItems.catCrew.forEach(function (cat) {
         if (
             firstPlayer.positionX < cat.positionX + cat.width &&
@@ -406,8 +443,8 @@ setInterval(() => {
             firstPlayer.positionY + firstPlayer.height > cat.positionY
         ) {
             makeGameOverDogNoise();
-            stopBackgroundScrolling();
             stopMainTheme();
+            stopBackgroundScrolling();
             gameOver = true;
             clearTimeout(generateBananaTimer);
             clearTimeout(generateCatTimer);
@@ -415,6 +452,7 @@ setInterval(() => {
             console.log("collision")
             gameOverView.style.display = "block";
             gameOverTitle.innerText = "Oh no, an angry cat got you!";
+            
         }
     })
 }, 60
@@ -422,6 +460,11 @@ setInterval(() => {
 
 // if collision between cat and bark
 setInterval(() => {
+
+    if(!movingItems.catCrew.length) {
+        return;
+    }
+    
     for (let i = 0; i < movingItems.catCrew.length; i++) {
         for (let y = 0; y < bulletArr.length; y++) {
             if (
@@ -453,15 +496,18 @@ function generateBanana() {
     if (gameOver) return;
     const newBanana = new CrazyBanana();
     movingItems.bananaCrew.push(newBanana);
-    generateBananaTimer = setTimeout(generateBanana, Math.random() * (4000 - 2000) + 1000);
+    generateBananaTimer = setTimeout(generateBanana, Math.random() * (1000) + 2000);
 }
-
-generateBanana();
 
 
 // if collision with banana
 
 setInterval(() => {
+
+    if(!movingItems.bananaCrew.length) {
+        return;
+    }
+
     movingItems.bananaCrew.forEach(function (dog) {
         if (
             firstPlayer.positionX < dog.positionX + dog.width &&
@@ -480,23 +526,20 @@ setInterval(() => {
             stopBackgroundScrolling()
         }
     })
-}, 60
-)
-
-
-gameLoop();
+}, 60);
 
 // SET TIME
-let timer;
 const remainingTimeContainer = document.getElementById("RemainingTimeBox");
-let RemainingTime = 120;
+let RemainingTime = 12;
 const minutes = Math.floor(RemainingTime / 60)
     .toString()
     .padStart(2, "0");
 const seconds = (RemainingTime % 60).toString().padStart(2, "0");
 remainingTimeContainer.innerText = `${minutes}:${seconds}`;
 
-timer = setInterval(() => {
+function timer () { 
+if (gameStarted === true) {
+    const timerInterval = setInterval(() => {
     RemainingTime--;
     const minutes = Math.floor(RemainingTime / 60)
         .toString()
@@ -505,7 +548,7 @@ timer = setInterval(() => {
     remainingTimeContainer.innerText = `${minutes}:${seconds}`;
 
     if (RemainingTime === 0) {
-        clearInterval(timer);
+        clearInterval(timerInterval);
         clearTimeout(generateBananaTimer);
         clearTimeout(generateCatTimer);
         clearInterval(generateBoneTimer);
@@ -513,7 +556,13 @@ timer = setInterval(() => {
         result.innerText = `You've collected an impressive amount of ${boneCounter} bones!`;
         stopBackgroundScrolling()
     }
+    else if(gameOver === true) {
+        clearInterval(timerInterval);
+    }
 }, 1000)
+}
+}
+
 
 
 // REDIRECTIONS

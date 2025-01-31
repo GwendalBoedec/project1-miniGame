@@ -5,6 +5,7 @@ body {
 
 
 #background {
+    display: none;
     width: 1752px;
     height: 920px;
     background-image: url(./img/background\ test\ 2.jpg);
@@ -26,7 +27,7 @@ body {
 
 #infoContainer {
     position: absolute;
-    display: flex;
+    display: none;
     flex-direction: column;
     top: 0px;
     right: 0px;
@@ -127,6 +128,28 @@ body {
     text-align: center;
     justify-content: center;
     align-items: center;
+}
+
+#startWindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 250px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center; 
+}
+
+#startGameButton img {
+    width: 50px;
+    height: 50px;
 }
 
 #mainPlayer {
