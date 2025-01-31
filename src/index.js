@@ -530,7 +530,7 @@ setInterval(() => {
 
 // SET TIME
 const remainingTimeContainer = document.getElementById("RemainingTimeBox");
-let RemainingTime = 12;
+let RemainingTime = 120;
 const minutes = Math.floor(RemainingTime / 60)
     .toString()
     .padStart(2, "0");
