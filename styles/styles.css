@@ -1,13 +1,15 @@
-body {
+body html {
     margin: 0;
     font-family: cursive;
+    height: 100%;
+    width: 100%
 }
 
 
 #background {
     display: none;
-    width: 1752px;
-    height: 920px;
+    width: 100%;
+    height: 100vh;
     background-image: url(./img/background\ test\ 2.jpg);
     animation: scrollBackground 10s linear infinite;
     background-repeat: repeat-x;
@@ -27,20 +29,22 @@ body {
 
 #infoContainer {
     position: absolute;
-    display: none;
+    display: flex;
     flex-direction: column;
     top: 0px;
     right: 0px;
-    width: 160px;
-    height: 910px;
+    width: 10%;
+    height: 100%;
     background-color: palevioletred;
     border: 5px solid rgb(199, 103, 135);
 }
 
 #infoContainer section {
-    margin: 50px 10px;
+    margin: 5% 5%;
     font-family: cursive;
-    font-size: 1.5em;
+    font-size: 2.5vh;
+    flex: 1;
+    flex-shrink: 1;
 }
 
 #timer {
@@ -50,7 +54,9 @@ body {
     /* Centre verticalement */
     justify-content: center;
     /* Centre horizontalement  */
-    gap: 10px;
+    gap: 2vh;
+    flex: 1;
+    flex-shrink: 1;
 }
 
 #timer img {
@@ -66,7 +72,9 @@ body {
     /* Centre verticalement */
     justify-content: center;
     /* Centre horizontalement  */
-    gap: 10px;
+    gap: 2vh;
+    flex-shrink: 1;
+    flex: 1;
 }
 
 #bonesCounter img {
@@ -77,6 +85,7 @@ body {
 
 #commands {
     display: flex;
+    flex: 1;
     flex-direction: column;
     text-align: center;
     justify-content: center;
@@ -84,7 +93,8 @@ body {
     /* Centre verticalement */
     justify-content: center;
     /* Centre horizontalement  */
-    gap: 10px;
+    gap: 1vh;
+    flex-shrink: 1;
 }
 
 #commands img {
@@ -94,7 +104,7 @@ body {
 }
 
 #commands p {
-    font-size: 0.8em;
+    font-size: 2vh;
 
 }
 
